@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:midi="clr-namespace:Bonsai.Midi;assembly=Bonsai.Midi"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:SequencerClock">
+          <midi:Period>PT0.001S</midi:Period>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>Clock</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:ReadMidiFile">
+          <midi:FileName>bass.mid</midi:FileName>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Clock</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:PlaySequence">
+          <midi:LaunchQuantization>PT2S</midi:LaunchQuantization>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Repeat" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:ReadMidiFile">
+          <midi:FileName>arpeggio.mid</midi:FileName>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Clock</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:PlaySequence">
+          <midi:LaunchQuantization>PT2S</midi:LaunchQuantization>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Repeat" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Merge" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midi:SoftwareSynth">
+          <midi:Waveform>Sawtooth</midi:Waveform>
+          <midi:Gain>0.25</midi:Gain>
+          <midi:Attack>0.002</midi:Attack>
+          <midi:Release>0.05</midi:Release>
+          <midi:BufferLength>480</midi:BufferLength>
+        </Combinator>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="2" To="4" Label="Source1" />
+      <Edge From="3" To="4" Label="Source2" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="10" Label="Source1" />
+      <Edge From="6" To="8" Label="Source1" />
+      <Edge From="7" To="8" Label="Source2" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
+      <Edge From="10" To="11" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
