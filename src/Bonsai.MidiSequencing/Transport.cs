@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that converts a sequence of clock ticks into the musical

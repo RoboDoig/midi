@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Reactive.Linq;
 using Melanchall.DryWetMidi.Core;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that creates a MIDI control change event with the specified properties.

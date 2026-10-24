@@ -1,7 +1,7 @@
 using System;
 using Melanchall.DryWetMidi.Common;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     static class MidiValue
     {

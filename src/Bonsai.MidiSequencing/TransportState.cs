@@ -1,6 +1,6 @@
 using System;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents the musical position of a transport at a specific clock tick.

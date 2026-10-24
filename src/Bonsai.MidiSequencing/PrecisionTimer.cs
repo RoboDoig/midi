@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Provides sub-millisecond blocking waits for the current thread. On Windows this uses

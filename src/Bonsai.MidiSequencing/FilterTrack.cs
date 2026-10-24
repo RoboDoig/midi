@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that filters the sequence for events belonging to the specified track.

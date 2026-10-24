@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using Melanchall.DryWetMidi.Core;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Renders a simple polyphonic synthesizer into blocks of audio samples.

@@ -1,4 +1,4 @@
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Specifies the type of a MIDI note event.

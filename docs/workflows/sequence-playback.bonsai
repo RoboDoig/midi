@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:midi="clr-namespace:Bonsai.Midi;assembly=Bonsai.Midi"
+                 xmlns:midiseq="clr-namespace:Bonsai.MidiSequencing;assembly=Bonsai.MidiSequencing"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -10,8 +10,8 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SequencerClock">
-          <midi:Period>PT0.001S</midi:Period>
+        <Combinator xsi:type="midiseq:SequencerClock">
+          <midiseq:Period>PT0.001S</midiseq:Period>
         </Combinator>
       </Expression>
       <Expression xsi:type="Disable">
@@ -107,65 +107,65 @@
         </Builder>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:Transport">
-          <midi:Tempo>124.04938252766927</midi:Tempo>
+        <Combinator xsi:type="midiseq:Transport">
+          <midiseq:Tempo>124.04938252766927</midiseq:Tempo>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:PublishSubject">
         <Name>Transport</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:ReadMidiFile">
-          <midi:FileName>bass.mid</midi:FileName>
+        <Combinator xsi:type="midiseq:ReadMidiFile">
+          <midiseq:FileName>bass.mid</midiseq:FileName>
         </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>Transport</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:PlaySequence">
-          <midi:LaunchQuantization>4</midi:LaunchQuantization>
-          <midi:Loop>true</midi:Loop>
-          <midi:Channel>0</midi:Channel>
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>true</midiseq:Loop>
+          <midiseq:Channel>0</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:TransposeNote">
-          <midi:Semitones>-12</midi:Semitones>
+        <Combinator xsi:type="midiseq:TransposeNote">
+          <midiseq:Semitones>-12</midiseq:Semitones>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:ReadMidiFile">
-          <midi:FileName>arpeggio.mid</midi:FileName>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="SubscribeSubject">
-        <Name>Transport</Name>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:PlaySequence">
-          <midi:LaunchQuantization>4</midi:LaunchQuantization>
-          <midi:Loop>true</midi:Loop>
-          <midi:Channel>1</midi:Channel>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateNoteSequence">
-          <midi:Notes>E5 _ . A5 G5 _ E5 . F5 _ . C6 A5 _ _ .</midi:Notes>
-          <midi:StepLength>0.5</midi:StepLength>
-          <midi:Gate>0.8</midi:Gate>
-          <midi:Velocity>90</midi:Velocity>
-          <midi:Channel>2</midi:Channel>
+        <Combinator xsi:type="midiseq:ReadMidiFile">
+          <midiseq:FileName>arpeggio.mid</midiseq:FileName>
         </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>Transport</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:PlaySequence">
-          <midi:LaunchQuantization>4</midi:LaunchQuantization>
-          <midi:Loop>true</midi:Loop>
-          <midi:Channel>3</midi:Channel>
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>true</midiseq:Loop>
+          <midiseq:Channel>1</midiseq:Channel>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:CreateNoteSequence">
+          <midiseq:Notes>E5 _ . A5 G5 _ E5 . F5 _ . C6 A5 _ _ .</midiseq:Notes>
+          <midiseq:StepLength>0.5</midiseq:StepLength>
+          <midiseq:Gate>0.8</midiseq:Gate>
+          <midiseq:Velocity>90</midiseq:Velocity>
+          <midiseq:Channel>2</midiseq:Channel>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Transport</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>true</midiseq:Loop>
+          <midiseq:Channel>3</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -184,12 +184,12 @@
         <Combinator xsi:type="num:Sin" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateControlChange">
-          <midi:Channel>0</midi:Channel>
-          <midi:ControlNumber>21</midi:ControlNumber>
-          <midi:Value>0</midi:Value>
-          <midi:Min>-1</midi:Min>
-          <midi:Max>1</midi:Max>
+        <Combinator xsi:type="midiseq:CreateControlChange">
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:ControlNumber>21</midiseq:ControlNumber>
+          <midiseq:Value>0</midiseq:Value>
+          <midiseq:Min>-1</midiseq:Min>
+          <midiseq:Max>1</midiseq:Max>
         </Combinator>
       </Expression>
       <Expression xsi:type="Divide">
@@ -201,30 +201,30 @@
         <Combinator xsi:type="num:Sin" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateControlChange">
-          <midi:Channel>0</midi:Channel>
-          <midi:ControlNumber>20</midi:ControlNumber>
-          <midi:Value>0</midi:Value>
-          <midi:Min>-1</midi:Min>
-          <midi:Max>1</midi:Max>
+        <Combinator xsi:type="midiseq:CreateControlChange">
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:ControlNumber>20</midiseq:ControlNumber>
+          <midiseq:Value>0</midiseq:Value>
+          <midiseq:Min>-1</midiseq:Min>
+          <midiseq:Max>1</midiseq:Max>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:OutputDevice">
-          <midi:Index>1</midi:Index>
+        <Combinator xsi:type="midiseq:OutputDevice">
+          <midiseq:Index>1</midiseq:Index>
         </Combinator>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="Combinator">
-          <Combinator xsi:type="midi:SoftwareSynth">
-            <midi:Waveform>Sawtooth</midi:Waveform>
-            <midi:Gain>0.25</midi:Gain>
-            <midi:Attack>0.002</midi:Attack>
-            <midi:Release>0.05</midi:Release>
-            <midi:BufferLength>480</midi:BufferLength>
+          <Combinator xsi:type="midiseq:SoftwareSynth">
+            <midiseq:Waveform>Sawtooth</midiseq:Waveform>
+            <midiseq:Gain>0.25</midiseq:Gain>
+            <midiseq:Attack>0.002</midiseq:Attack>
+            <midiseq:Release>0.05</midiseq:Release>
+            <midiseq:BufferLength>480</midiseq:BufferLength>
           </Combinator>
         </Builder>
       </Expression>

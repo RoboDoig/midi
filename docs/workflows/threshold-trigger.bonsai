@@ -3,7 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:midi="clr-namespace:Bonsai.Midi;assembly=Bonsai.Midi"
+                 xmlns:midiseq="clr-namespace:Bonsai.MidiSequencing;assembly=Bonsai.MidiSequencing"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -32,22 +32,22 @@
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="Combinator">
-          <Combinator xsi:type="midi:CreateNoteEvent">
-            <midi:EventType>NoteOn</midi:EventType>
-            <midi:Channel>0</midi:Channel>
-            <midi:NoteNumber>60</midi:NoteNumber>
-            <midi:Velocity>100</midi:Velocity>
+          <Combinator xsi:type="midiseq:CreateNoteEvent">
+            <midiseq:EventType>NoteOn</midiseq:EventType>
+            <midiseq:Channel>0</midiseq:Channel>
+            <midiseq:NoteNumber>60</midiseq:NoteNumber>
+            <midiseq:Velocity>100</midiseq:Velocity>
           </Combinator>
         </Builder>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="Combinator">
-          <Combinator xsi:type="midi:SoftwareSynth">
-            <midi:Waveform>Triangle</midi:Waveform>
-            <midi:Gain>0.25</midi:Gain>
-            <midi:Attack>0.002</midi:Attack>
-            <midi:Release>0.2</midi:Release>
-            <midi:BufferLength>480</midi:BufferLength>
+          <Combinator xsi:type="midiseq:SoftwareSynth">
+            <midiseq:Waveform>Triangle</midiseq:Waveform>
+            <midiseq:Gain>0.25</midiseq:Gain>
+            <midiseq:Attack>0.002</midiseq:Attack>
+            <midiseq:Release>0.2</midiseq:Release>
+            <midiseq:BufferLength>480</midiseq:BufferLength>
           </Combinator>
         </Builder>
       </Expression>
@@ -145,11 +145,11 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateNoteEvent">
-          <midi:EventType>NoteOn</midi:EventType>
-          <midi:Channel>0</midi:Channel>
-          <midi:NoteNumber>60</midi:NoteNumber>
-          <midi:Velocity>100</midi:Velocity>
+        <Combinator xsi:type="midiseq:CreateNoteEvent">
+          <midiseq:EventType>NoteOn</midiseq:EventType>
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:NoteNumber>60</midiseq:NoteNumber>
+          <midiseq:Velocity>100</midiseq:Velocity>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:Condition">
@@ -170,11 +170,11 @@
       </Expression>
       <Expression xsi:type="Unit" />
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateNoteEvent">
-          <midi:EventType>NoteOff</midi:EventType>
-          <midi:Channel>0</midi:Channel>
-          <midi:NoteNumber>60</midi:NoteNumber>
-          <midi:Velocity>100</midi:Velocity>
+        <Combinator xsi:type="midiseq:CreateNoteEvent">
+          <midiseq:EventType>NoteOff</midiseq:EventType>
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:NoteNumber>60</midiseq:NoteNumber>
+          <midiseq:Velocity>100</midiseq:Velocity>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -211,11 +211,11 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateNoteEvent">
-          <midi:EventType>NoteOn</midi:EventType>
-          <midi:Channel>0</midi:Channel>
-          <midi:NoteNumber>67</midi:NoteNumber>
-          <midi:Velocity>100</midi:Velocity>
+        <Combinator xsi:type="midiseq:CreateNoteEvent">
+          <midiseq:EventType>NoteOn</midiseq:EventType>
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:NoteNumber>67</midiseq:NoteNumber>
+          <midiseq:Velocity>100</midiseq:Velocity>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:Condition">
@@ -236,11 +236,11 @@
       </Expression>
       <Expression xsi:type="Unit" />
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:CreateNoteEvent">
-          <midi:EventType>NoteOff</midi:EventType>
-          <midi:Channel>0</midi:Channel>
-          <midi:NoteNumber>67</midi:NoteNumber>
-          <midi:Velocity>100</midi:Velocity>
+        <Combinator xsi:type="midiseq:CreateNoteEvent">
+          <midiseq:EventType>NoteOff</midiseq:EventType>
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:NoteNumber>67</midiseq:NoteNumber>
+          <midiseq:Velocity>100</midiseq:Velocity>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -250,12 +250,12 @@
         <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SoftwareSynth">
-          <midi:Waveform>Triangle</midi:Waveform>
-          <midi:Gain>0.25</midi:Gain>
-          <midi:Attack>0.002</midi:Attack>
-          <midi:Release>0.2</midi:Release>
-          <midi:BufferLength>480</midi:BufferLength>
+        <Combinator xsi:type="midiseq:SoftwareSynth">
+          <midiseq:Waveform>Triangle</midiseq:Waveform>
+          <midiseq:Gain>0.25</midiseq:Gain>
+          <midiseq:Attack>0.002</midiseq:Attack>
+          <midiseq:Release>0.2</midiseq:Release>
+          <midiseq:BufferLength>480</midiseq:BufferLength>
         </Combinator>
       </Expression>
     </Nodes>

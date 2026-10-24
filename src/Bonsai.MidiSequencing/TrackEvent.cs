@@ -1,6 +1,6 @@
 using Melanchall.DryWetMidi.Core;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents a MIDI event emitted during sequence playback, together with the index

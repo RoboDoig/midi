@@ -6,7 +6,7 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that generates a high resolution clock signal for driving

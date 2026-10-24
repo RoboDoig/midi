@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that creates a MIDI sequence from a step pattern of notes.

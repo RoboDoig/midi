@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents an operator that plays back MIDI sequences, emitting each event

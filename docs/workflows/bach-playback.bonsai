@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:midi="clr-namespace:Bonsai.Midi;assembly=Bonsai.Midi"
+                 xmlns:midiseq="clr-namespace:Bonsai.MidiSequencing;assembly=Bonsai.MidiSequencing"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -9,8 +9,8 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SequencerClock">
-          <midi:Period>PT0.001S</midi:Period>
+        <Combinator xsi:type="midiseq:SequencerClock">
+          <midiseq:Period>PT0.001S</midiseq:Period>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -84,74 +84,74 @@
         </PropertyMappings>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:Transport">
-          <midi:Tempo>120</midi:Tempo>
+        <Combinator xsi:type="midiseq:Transport">
+          <midiseq:Tempo>120</midiseq:Tempo>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:PublishSubject">
         <Name>Transport</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:ReadMidiFile">
-          <midi:FileName>contrapunctusIX.mid</midi:FileName>
+        <Combinator xsi:type="midiseq:ReadMidiFile">
+          <midiseq:FileName>contrapunctusIX.mid</midiseq:FileName>
         </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>Transport</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:PlaySequence">
-          <midi:LaunchQuantization>4</midi:LaunchQuantization>
-          <midi:Loop>true</midi:Loop>
-          <midi:Channel>0</midi:Channel>
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>true</midiseq:Loop>
+          <midiseq:Channel>0</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:FilterTrack">
-          <midi:Index>1</midi:Index>
+        <Combinator xsi:type="midiseq:FilterTrack">
+          <midiseq:Index>1</midiseq:Index>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SetChannel">
-          <midi:Channel>0</midi:Channel>
+        <Combinator xsi:type="midiseq:SetChannel">
+          <midiseq:Channel>0</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:FilterTrack">
-          <midi:Index>2</midi:Index>
+        <Combinator xsi:type="midiseq:FilterTrack">
+          <midiseq:Index>2</midiseq:Index>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SetChannel">
-          <midi:Channel>1</midi:Channel>
+        <Combinator xsi:type="midiseq:SetChannel">
+          <midiseq:Channel>1</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:FilterTrack">
-          <midi:Index>3</midi:Index>
+        <Combinator xsi:type="midiseq:FilterTrack">
+          <midiseq:Index>3</midiseq:Index>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SetChannel">
-          <midi:Channel>2</midi:Channel>
+        <Combinator xsi:type="midiseq:SetChannel">
+          <midiseq:Channel>2</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:FilterTrack">
-          <midi:Index>4</midi:Index>
+        <Combinator xsi:type="midiseq:FilterTrack">
+          <midiseq:Index>4</midiseq:Index>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SetChannel">
-          <midi:Channel>3</midi:Channel>
+        <Combinator xsi:type="midiseq:SetChannel">
+          <midiseq:Channel>3</midiseq:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:OutputDevice">
-          <midi:Index>1</midi:Index>
+        <Combinator xsi:type="midiseq:OutputDevice">
+          <midiseq:Index>1</midiseq:Index>
         </Combinator>
       </Expression>
     </Nodes>

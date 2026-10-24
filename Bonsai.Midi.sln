@@ -1,30 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.10.12224.181 stable
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{DEE5DD87-39C1-BF34-B639-A387DCCF972B}"
 	ProjectSection(SolutionItems) = preProject
+		build\Common.Tests.csproj.props = build\Common.Tests.csproj.props
 		build\Common.csproj.props = build\Common.csproj.props
 		build\Common.csproj.targets = build\Common.csproj.targets
-		build\Common.Tests.csproj.props = build\Common.Tests.csproj.props
-		build\icon.png = build\icon.png
 		build\Package.props = build\Package.props
 		build\Project.csproj.props = build\Project.csproj.props
+		build\icon.png = build\icon.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8EDB3153-8E12-4824-8329-2A89B3727E4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonsai.Midi", "src\Bonsai.Midi\Bonsai.Midi.csproj", "{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonsai.MidiSequencing", "src\Bonsai.MidiSequencing\Bonsai.MidiSequencing.csproj", "{F1E81ED2-34E1-4095-963D-750987A4CB9B}"
+EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C73D760-8B93-4E0A-AA9F-CA95028510E1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -39,14 +39,29 @@ Global
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}.Release|x64.Build.0 = Release|Any CPU
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}.Release|x86.ActiveCfg = Release|Any CPU
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}.Release|x86.Build.0 = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|x64.Build.0 = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x64.ActiveCfg = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x64.Build.0 = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3} = {8EDB3153-8E12-4824-8329-2A89B3727E4B}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1C73D760-8B93-4E0A-AA9F-CA95028510E1}
+		{F1E81ED2-34E1-4095-963D-750987A4CB9B} = {8EDB3153-8E12-4824-8329-2A89B3727E4B}
 	EndGlobalSection
 EndGlobal

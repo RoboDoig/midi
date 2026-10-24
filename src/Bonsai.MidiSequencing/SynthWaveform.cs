@@ -1,4 +1,4 @@
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Specifies the oscillator waveform used by the software synthesizer.

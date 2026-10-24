@@ -4,7 +4,7 @@ using System.Linq;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 
-namespace Bonsai.Midi
+namespace Bonsai.MidiSequencing
 {
     /// <summary>
     /// Represents a sequence of MIDI events in musical time, with an explicit length.
