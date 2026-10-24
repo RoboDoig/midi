@@ -58,7 +58,7 @@ namespace Bonsai.Midi
         /// Creates a sequence from all non-meta events in a standard MIDI file, measured in
         /// quarter notes. The length of the sequence is the position of the last event rounded
         /// up to a whole beat. The tempo map of the file is ignored, since tempo is defined
-        /// by the transport.
+        /// by the transport. Each event is tagged with the zero-based index of its track chunk.
         /// </summary>
         /// <param name="file">The MIDI file to convert.</param>
         /// <returns>A new <see cref="MidiSequence"/> containing the events in the file.</returns>
@@ -69,10 +69,12 @@ namespace Bonsai.Midi
                 throw new NotSupportedException("Only MIDI files with ticks per quarter note time division are supported.");
             }
 
+            // Tag each event with the index of its track chunk, so events can be filtered by track
             var ticksPerBeat = (double)timeDivision.TicksPerQuarterNote;
-            var events = file.GetTimedEvents()
-                .Where(timedEvent => timedEvent.Event is not MetaEvent)
-                .Select(timedEvent => new SequenceEvent(timedEvent.Time / ticksPerBeat, timedEvent.Event))
+            var events = file.GetTrackChunks()
+                .SelectMany((track, trackIndex) => track.GetTimedEvents()
+                    .Where(timedEvent => timedEvent.Event is not MetaEvent)
+                    .Select(timedEvent => new SequenceEvent(timedEvent.Time / ticksPerBeat, timedEvent.Event, trackIndex)))
                 .ToArray();
             var length = events.Length > 0 ? Math.Ceiling(events.Max(sequenceEvent => sequenceEvent.Beat)) : 0;
             return new MidiSequence(events, length);

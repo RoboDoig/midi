@@ -228,6 +228,12 @@
           </Combinator>
         </Builder>
       </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Event</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Event</Selector>
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="12" Label="Source1" />
@@ -249,10 +255,12 @@
       <Edge From="17" To="33" Label="Source1" />
       <Edge From="18" To="20" Label="Source1" />
       <Edge From="19" To="20" Label="Source2" />
-      <Edge From="20" To="33" Label="Source2" />
+      <Edge From="20" To="36" Label="Source1" />
+      <Edge From="36" To="33" Label="Source2" />
       <Edge From="21" To="23" Label="Source1" />
       <Edge From="22" To="23" Label="Source2" />
-      <Edge From="23" To="33" Label="Source3" />
+      <Edge From="23" To="37" Label="Source1" />
+      <Edge From="37" To="33" Label="Source3" />
       <Edge From="24" To="25" Label="Source1" />
       <Edge From="25" To="26" Label="Source1" />
       <Edge From="26" To="27" Label="Source1" />

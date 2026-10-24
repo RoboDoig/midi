@@ -64,8 +64,11 @@ namespace Bonsai.Midi
         /// <param name="transport">
         /// A sequence of <see cref="TransportState"/> values used to drive playback.
         /// </param>
-        /// <returns>A sequence of <see cref="MidiEvent"/> objects in playback order.</returns>
-        public IObservable<MidiEvent> Process(IObservable<MidiFile> source, IObservable<TransportState> transport)
+        /// <returns>
+        /// A sequence of <see cref="TrackEvent"/> objects in playback order, each tagged with
+        /// the index of the track chunk it belongs to.
+        /// </returns>
+        public IObservable<TrackEvent> Process(IObservable<MidiFile> source, IObservable<TransportState> transport)
         {
             return Process(source.Select(MidiSequence.FromMidiFile), transport);
         }
@@ -78,10 +81,13 @@ namespace Bonsai.Midi
         /// <param name="transport">
         /// A sequence of <see cref="TransportState"/> values used to drive playback.
         /// </param>
-        /// <returns>A sequence of <see cref="MidiEvent"/> objects in playback order.</returns>
-        public IObservable<MidiEvent> Process(IObservable<MidiSequence> source, IObservable<TransportState> transport)
+        /// <returns>
+        /// A sequence of <see cref="TrackEvent"/> objects in playback order, each tagged with
+        /// the index of the track it belongs to.
+        /// </returns>
+        public IObservable<TrackEvent> Process(IObservable<MidiSequence> source, IObservable<TransportState> transport)
         {
-            return Observable.Create<MidiEvent>(observer =>
+            return Observable.Create<TrackEvent>(observer =>
             {
                 var gate = new object();
                 var sourceCompleted = false;
@@ -91,7 +97,7 @@ namespace Bonsai.Midi
                 MidiSequence? current = null;
                 var index = 0;
                 var startBeat = 0.0;
-                var activeNotes = new HashSet<(FourBitNumber, SevenBitNumber)>();
+                var activeNotes = new HashSet<(int, FourBitNumber, SevenBitNumber)>();
                 var quantization = LaunchQuantization;
                 FourBitNumber? channel = null;
 
@@ -103,15 +109,17 @@ namespace Bonsai.Midi
 
                 void ReleaseActiveNotes()
                 {
-                    foreach (var (channel, noteNumber) in activeNotes)
+                    foreach (var (track, channel, noteNumber) in activeNotes)
                     {
-                        observer.OnNext(new NoteOffEvent(noteNumber, SevenBitNumber.MinValue) { Channel = channel });
+                        observer.OnNext(new TrackEvent(track, new NoteOffEvent(noteNumber, SevenBitNumber.MinValue) { Channel = channel }));
                     }
                     activeNotes.Clear();
                 }
 
-                void Emit(MidiEvent midiEvent)
+                void Emit(SequenceEvent sequenceEvent)
                 {
+                    var track = sequenceEvent.Track;
+                    var midiEvent = sequenceEvent.Event;
                     if (channel.HasValue && midiEvent is ChannelEvent channelEvent && channelEvent.Channel != channel.Value)
                     {
                         // Clone the event since sequences may be shared between players
@@ -123,16 +131,16 @@ namespace Bonsai.Midi
                     switch (midiEvent)
                     {
                         case NoteOnEvent noteOn when noteOn.Velocity > 0:
-                            activeNotes.Add((noteOn.Channel, noteOn.NoteNumber));
+                            activeNotes.Add((track, noteOn.Channel, noteOn.NoteNumber));
                             break;
                         case NoteOnEvent noteOn:
-                            activeNotes.Remove((noteOn.Channel, noteOn.NoteNumber));
+                            activeNotes.Remove((track, noteOn.Channel, noteOn.NoteNumber));
                             break;
                         case NoteOffEvent noteOff:
-                            activeNotes.Remove((noteOff.Channel, noteOff.NoteNumber));
+                            activeNotes.Remove((track, noteOff.Channel, noteOff.NoteNumber));
                             break;
                     }
-                    observer.OnNext(midiEvent);
+                    observer.OnNext(new TrackEvent(track, midiEvent));
                 }
 
                 // Emits all events of the current sequence scheduled up to the specified beat,
@@ -146,7 +154,7 @@ namespace Bonsai.Midi
                         {
                             var eventBeat = startBeat + events[index].Beat;
                             if (inclusive ? eventBeat > untilBeat : eventBeat >= untilBeat) break;
-                            Emit(events[index++].Event);
+                            Emit(events[index++]);
                         }
 
                         var endBeat = startBeat + current.Length;
