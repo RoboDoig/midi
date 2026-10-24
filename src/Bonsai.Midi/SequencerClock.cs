@@ -16,8 +16,8 @@ namespace Bonsai.Midi
     /// Each subscription runs a dedicated high priority thread and emits the elapsed
     /// time since the clock started. Tick deadlines are computed from the clock origin,
     /// so timer jitter never accumulates into drift. To keep multiple sequences
-    /// synchronized, share a single clock between all sequence players, e.g. using a
-    /// publish subject.
+    /// synchronized, share a single clock, or a single <see cref="Transport"/> driven
+    /// by it, between all sequence players, e.g. using a publish subject.
     /// </remarks>
     [Description("Generates a high resolution clock signal for driving MIDI sequence playback.")]
     public class SequencerClock : Source<TimeSpan>
