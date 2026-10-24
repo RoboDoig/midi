@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12224.181 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{DEE5DD87-39C1-BF34-B639-A387DCCF972B}"
 	ProjectSection(SolutionItems) = preProject
-		build\Common.Tests.csproj.props = build\Common.Tests.csproj.props
 		build\Common.csproj.props = build\Common.csproj.props
 		build\Common.csproj.targets = build\Common.csproj.targets
+		build\Common.Tests.csproj.props = build\Common.Tests.csproj.props
+		build\icon.png = build\icon.png
 		build\Package.props = build\Package.props
 		build\Project.csproj.props = build\Project.csproj.props
-		build\icon.png = build\icon.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8EDB3153-8E12-4824-8329-2A89B3727E4B}"
@@ -20,11 +20,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonsai.MidiSequencing", "src\Bonsai.MidiSequencing\Bonsai.MidiSequencing.csproj", "{F1E81ED2-34E1-4095-963D-750987A4CB9B}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1C73D760-8B93-4E0A-AA9F-CA95028510E1}
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -52,16 +54,14 @@ Global
 		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x86.ActiveCfg = Release|Any CPU
 		{F1E81ED2-34E1-4095-963D-750987A4CB9B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{30F3CA6F-6A50-4CB4-B408-8958E8065BE3} = {8EDB3153-8E12-4824-8329-2A89B3727E4B}
 		{F1E81ED2-34E1-4095-963D-750987A4CB9B} = {8EDB3153-8E12-4824-8329-2A89B3727E4B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C73D760-8B93-4E0A-AA9F-CA95028510E1}
 	EndGlobalSection
 EndGlobal
