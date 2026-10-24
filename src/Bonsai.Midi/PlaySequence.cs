@@ -42,6 +42,18 @@ namespace Bonsai.Midi
         public bool Loop { get; set; }
 
         /// <summary>
+        /// Gets or sets the MIDI channel, from 0 to 15, on which to send all channel events.
+        /// If no value is specified, events are sent on their original channels.
+        /// </summary>
+        /// <remarks>
+        /// Changes to this property take effect when a sequence starts or loops, so that
+        /// notes are always released on the same channel on which they were started.
+        /// </remarks>
+        [Range(0, 15)]
+        [Description("The MIDI channel, from 0 to 15, on which to send all channel events. If no value is specified, events are sent on their original channels.")]
+        public int? Channel { get; set; }
+
+        /// <summary>
         /// Plays back each MIDI file in an observable sequence, emitting its events
         /// as they are reached on the specified transport.
         /// </summary>
@@ -73,6 +85,7 @@ namespace Bonsai.Midi
             {
                 var gate = new object();
                 var sourceCompleted = false;
+                var faulted = false;
                 MidiSequence? pending = null;
                 double? pendingStart = null;
                 MidiSequence? current = null;
@@ -80,6 +93,13 @@ namespace Bonsai.Midi
                 var startBeat = 0.0;
                 var activeNotes = new HashSet<(FourBitNumber, SevenBitNumber)>();
                 var quantization = LaunchQuantization;
+                FourBitNumber? channel = null;
+
+                void UpdateChannel()
+                {
+                    var value = Channel;
+                    channel = value.HasValue ? MidiValue.ToFourBitNumber(value.Value, nameof(Channel)) : null;
+                }
 
                 void ReleaseActiveNotes()
                 {
@@ -92,6 +112,14 @@ namespace Bonsai.Midi
 
                 void Emit(MidiEvent midiEvent)
                 {
+                    if (channel.HasValue && midiEvent is ChannelEvent channelEvent && channelEvent.Channel != channel.Value)
+                    {
+                        // Clone the event since sequences may be shared between players
+                        var remapped = (ChannelEvent)channelEvent.Clone();
+                        remapped.Channel = channel.Value;
+                        midiEvent = remapped;
+                    }
+
                     switch (midiEvent)
                     {
                         case NoteOnEvent noteOn when noteOn.Velocity > 0:
@@ -127,6 +155,7 @@ namespace Bonsai.Midi
                         {
                             startBeat = endBeat;
                             index = 0;
+                            UpdateChannel();
                         }
                         else current = null;
                     }
@@ -151,28 +180,16 @@ namespace Bonsai.Midi
                     {
                         lock (gate)
                         {
-                            var beat = state.Beat;
-                            if (pending != null)
+                            if (faulted) return;
+                            try
                             {
-                                pendingStart ??= quantization > 0
-                                    ? Math.Ceiling(beat / quantization) * quantization
-                                    : beat;
-                                if (beat >= pendingStart)
-                                {
-                                    Advance(pendingStart.Value, inclusive: false);
-                                    ReleaseActiveNotes();
-                                    current = pending;
-                                    startBeat = pendingStart.Value;
-                                    index = 0;
-                                    pending = null;
-                                    pendingStart = null;
-                                }
+                                OnTick(state.Beat);
                             }
-
-                            Advance(beat, inclusive: true);
-                            if (sourceCompleted && current == null && pending == null)
+                            catch (Exception ex)
                             {
-                                observer.OnCompleted();
+                                // Report the error on this player only, without faulting the shared transport
+                                faulted = true;
+                                observer.OnError(ex);
                             }
                         }
                     },
@@ -184,6 +201,33 @@ namespace Bonsai.Midi
                     {
                         lock (gate) observer.OnCompleted();
                     });
+
+                void OnTick(double beat)
+                {
+                    if (pending != null)
+                    {
+                        pendingStart ??= quantization > 0
+                            ? Math.Ceiling(beat / quantization) * quantization
+                            : beat;
+                        if (beat >= pendingStart)
+                        {
+                            Advance(pendingStart.Value, inclusive: false);
+                            ReleaseActiveNotes();
+                            current = pending;
+                            startBeat = pendingStart.Value;
+                            index = 0;
+                            UpdateChannel();
+                            pending = null;
+                            pendingStart = null;
+                        }
+                    }
+
+                    Advance(beat, inclusive: true);
+                    if (sourceCompleted && current == null && pending == null)
+                    {
+                        observer.OnCompleted();
+                    }
+                }
 
                 return new CompositeDisposable(
                     transport.SubscribeSafe(transportObserver),

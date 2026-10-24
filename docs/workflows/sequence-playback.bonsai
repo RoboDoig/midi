@@ -13,75 +13,97 @@
           <midi:Period>PT0.001S</midi:Period>
         </Combinator>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:CameraCapture">
-          <cv:Index>0</cv:Index>
-          <cv:CaptureProperties />
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:CameraCapture">
+            <cv:Index>0</cv:Index>
+            <cv:CaptureProperties />
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:Flip">
-          <cv:Mode>Horizontal</cv:Mode>
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:Flip">
+            <cv:Mode>Horizontal</cv:Mode>
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:ConvertColor">
-          <cv:Conversion>Bgr2Hsv</cv:Conversion>
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:ConvertColor">
+            <cv:Conversion>Bgr2Hsv</cv:Conversion>
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:HsvThreshold">
-          <cv:Lower>
-            <cv:Val0>80</cv:Val0>
-            <cv:Val1>50</cv:Val1>
-            <cv:Val2>110</cv:Val2>
-            <cv:Val3>0</cv:Val3>
-          </cv:Lower>
-          <cv:Upper>
-            <cv:Val0>120</cv:Val0>
-            <cv:Val1>255</cv:Val1>
-            <cv:Val2>160</cv:Val2>
-            <cv:Val3>0</cv:Val3>
-          </cv:Upper>
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:HsvThreshold">
+            <cv:Lower>
+              <cv:Val0>80</cv:Val0>
+              <cv:Val1>50</cv:Val1>
+              <cv:Val2>110</cv:Val2>
+              <cv:Val3>0</cv:Val3>
+            </cv:Lower>
+            <cv:Upper>
+              <cv:Val0>120</cv:Val0>
+              <cv:Val1>255</cv:Val1>
+              <cv:Val2>160</cv:Val2>
+              <cv:Val3>0</cv:Val3>
+            </cv:Upper>
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:FindContours">
-          <cv:Mode>External</cv:Mode>
-          <cv:Method>ChainApproxNone</cv:Method>
-          <cv:Offset>
-            <cv:X>0</cv:X>
-            <cv:Y>0</cv:Y>
-          </cv:Offset>
-          <cv:MinArea xsi:nil="true" />
-          <cv:MaxArea xsi:nil="true" />
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:FindContours">
+            <cv:Mode>External</cv:Mode>
+            <cv:Method>ChainApproxNone</cv:Method>
+            <cv:Offset>
+              <cv:X>0</cv:X>
+              <cv:Y>0</cv:Y>
+            </cv:Offset>
+            <cv:MinArea xsi:nil="true" />
+            <cv:MaxArea xsi:nil="true" />
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:LargestBinaryRegion" />
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="cv:LargestBinaryRegion" />
+        </Builder>
       </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>Centroid</Selector>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="MemberSelector">
+          <Selector>Centroid</Selector>
+        </Builder>
       </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>X</Selector>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="MemberSelector">
+          <Selector>X</Selector>
+        </Builder>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="dsp:Rescale">
-          <dsp:Min>0</dsp:Min>
-          <dsp:Max>600</dsp:Max>
-          <dsp:RangeMin>40</dsp:RangeMin>
-          <dsp:RangeMax>240</dsp:RangeMax>
-          <dsp:RescaleType>Linear</dsp:RescaleType>
-        </Combinator>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="dsp:Rescale">
+            <dsp:Min>0</dsp:Min>
+            <dsp:Max>600</dsp:Max>
+            <dsp:RangeMin>40</dsp:RangeMin>
+            <dsp:RangeMax>240</dsp:RangeMax>
+            <dsp:RescaleType>Linear</dsp:RescaleType>
+          </Combinator>
+        </Builder>
       </Expression>
-      <Expression xsi:type="PropertyMapping">
-        <PropertyMappings>
-          <Property Name="Tempo" />
-        </PropertyMappings>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="PropertyMapping">
+          <PropertyMappings>
+            <Property Name="Tempo" />
+          </PropertyMappings>
+        </Builder>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="midi:Transport">
@@ -103,6 +125,7 @@
         <Combinator xsi:type="midi:PlaySequence">
           <midi:LaunchQuantization>4</midi:LaunchQuantization>
           <midi:Loop>true</midi:Loop>
+          <midi:Channel>0</midi:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -117,6 +140,7 @@
         <Combinator xsi:type="midi:PlaySequence">
           <midi:LaunchQuantization>4</midi:LaunchQuantization>
           <midi:Loop>true</midi:Loop>
+          <midi:Channel>1</midi:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -135,19 +159,27 @@
         <Combinator xsi:type="midi:PlaySequence">
           <midi:LaunchQuantization>4</midi:LaunchQuantization>
           <midi:Loop>true</midi:Loop>
+          <midi:Channel>3</midi:Channel>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="midi:SoftwareSynth">
-          <midi:Waveform>Sawtooth</midi:Waveform>
-          <midi:Gain>0.25</midi:Gain>
-          <midi:Attack>0.002</midi:Attack>
-          <midi:Release>0.05</midi:Release>
-          <midi:BufferLength>480</midi:BufferLength>
+        <Combinator xsi:type="midi:OutputDevice">
+          <midi:Index>1</midi:Index>
         </Combinator>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="midi:SoftwareSynth">
+            <midi:Waveform>Sawtooth</midi:Waveform>
+            <midi:Gain>0.25</midi:Gain>
+            <midi:Attack>0.002</midi:Attack>
+            <midi:Release>0.05</midi:Release>
+            <midi:BufferLength>480</midi:BufferLength>
+          </Combinator>
+        </Builder>
       </Expression>
     </Nodes>
     <Edges>
@@ -174,6 +206,7 @@
       <Edge From="21" To="22" Label="Source2" />
       <Edge From="22" To="23" Label="Source3" />
       <Edge From="23" To="24" Label="Source1" />
+      <Edge From="24" To="25" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
