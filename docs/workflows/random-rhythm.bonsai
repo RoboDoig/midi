@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:midiseq="clr-namespace:Bonsai.MidiSequencing;assembly=Bonsai.MidiSequencing"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:SequencerClock">
+          <midiseq:Period>PT0.001S</midiseq:Period>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:Transport">
+          <midiseq:Tempo>120</midiseq:Tempo>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>Transport</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Transport</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Beat</Selector>
+      </Expression>
+      <Expression xsi:type="Add">
+        <Operand xsi:type="DoubleProperty">
+          <Value>2</Value>
+        </Operand>
+      </Expression>
+      <Expression xsi:type="Divide">
+        <Operand xsi:type="DoubleProperty">
+          <Value>4</Value>
+        </Operand>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="num:Floor" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:DistinctUntilChanged" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:CreateRandomRhythm">
+          <midiseq:BeatsPerBar>4</midiseq:BeatsPerBar>
+          <midiseq:BeatUnit>4</midiseq:BeatUnit>
+          <midiseq:MinimumNoteLength>16</midiseq:MinimumNoteLength>
+          <midiseq:MinChanges>1</midiseq:MinChanges>
+          <midiseq:MaxChanges>6</midiseq:MaxChanges>
+          <midiseq:DeleteProbability>0.25</midiseq:DeleteProbability>
+          <midiseq:Pitch>60</midiseq:Pitch>
+          <midiseq:Gate>0.5</midiseq:Gate>
+          <midiseq:Velocity>100</midiseq:Velocity>
+          <midiseq:Channel>0</midiseq:Channel>
+          <midiseq:Seed xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Transport</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>false</midiseq:Loop>
+          <midiseq:Channel xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Event</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:CreateNoteSequence">
+          <midiseq:Notes>C2 C2 C2 C2</midiseq:Notes>
+          <midiseq:StepLength>0.5</midiseq:StepLength>
+          <midiseq:Gate>0.25</midiseq:Gate>
+          <midiseq:Velocity>70</midiseq:Velocity>
+          <midiseq:Channel>1</midiseq:Channel>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Transport</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:PlaySequence">
+          <midiseq:LaunchQuantization>4</midiseq:LaunchQuantization>
+          <midiseq:Loop>true</midiseq:Loop>
+          <midiseq:Channel xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Event</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Merge" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="midiseq:SoftwareSynth">
+          <midiseq:Waveform>Sawtooth</midiseq:Waveform>
+          <midiseq:Gain>0.25</midiseq:Gain>
+          <midiseq:Attack>0.002</midiseq:Attack>
+          <midiseq:Release>0.05</midiseq:Release>
+          <midiseq:BufferLength>480</midiseq:BufferLength>
+        </Combinator>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="11" Label="Source1" />
+      <Edge From="10" To="11" Label="Source2" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="12" To="17" Label="Source1" />
+      <Edge From="13" To="15" Label="Source1" />
+      <Edge From="14" To="15" Label="Source2" />
+      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source2" />
+      <Edge From="17" To="18" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
