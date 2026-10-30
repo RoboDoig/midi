@@ -26,17 +26,10 @@ namespace Bonsai.MidiSequencing
     public class CreateRandomRhythm : Source<MidiSequence>
     {
         /// <summary>
-        /// Gets or sets the number of beats in each bar, i.e. the upper number of the time signature.
+        /// Gets or sets the time signature of the rhythm, which determines the length of the bar.
         /// </summary>
-        [Description("The number of beats in each bar, i.e. the upper number of the time signature.")]
-        public int BeatsPerBar { get; set; } = 4;
-
-        /// <summary>
-        /// Gets or sets the note value of each beat, i.e. the lower number of the time signature,
-        /// where 4 is a quarter note and 8 is an eighth note.
-        /// </summary>
-        [Description("The note value of each beat, i.e. the lower number of the time signature, where 4 is a quarter note and 8 is an eighth note.")]
-        public int BeatUnit { get; set; } = 4;
+        [Description("The time signature of the rhythm, which determines the length of the bar.")]
+        public TimeSignature TimeSignature { get; set; } = new TimeSignature(4, 4);
 
         /// <summary>
         /// Gets or sets the note value of the shortest note in the rhythm, where 16 is a sixteenth note.
@@ -134,23 +127,15 @@ namespace Bonsai.MidiSequencing
 
         MidiSequence CreateSequence(Random random)
         {
-            var beatsPerBar = BeatsPerBar;
-            var beatUnit = BeatUnit;
+            var timeSignature = TimeSignature?.Clone() ?? throw new InvalidOperationException("A valid time signature must be specified.");
+            timeSignature.Validate();
+            var beatsPerBar = timeSignature.BeatsPerBar;
+            var beatUnit = timeSignature.BeatUnit;
             var minimumNoteLength = MinimumNoteLength;
             var minChanges = MinChanges;
             var maxChanges = MaxChanges;
             var deleteProbability = DeleteProbability;
             var gate = Gate;
-            if (beatsPerBar <= 0)
-            {
-                throw new InvalidOperationException("The number of beats per bar must be a positive number.");
-            }
-
-            if (!IsPowerOfTwo(beatUnit))
-            {
-                throw new InvalidOperationException("The beat unit must be a power of two, e.g. 2, 4 or 8.");
-            }
-
             if (!IsPowerOfTwo(minimumNoteLength) || minimumNoteLength < beatUnit)
             {
                 throw new InvalidOperationException("The minimum note length must be a power of two no longer than the beat unit.");
@@ -214,7 +199,7 @@ namespace Bonsai.MidiSequencing
                 events.Add(new SequenceEvent(offBeat, new NoteOffEvent(pitch, SevenBitNumber.MinValue) { Channel = channel }));
             }
 
-            return new MidiSequence(events, barLength * unitBeats);
+            return new MidiSequence(events, barLength * unitBeats, timeSignature);
         }
 
         static bool IsPowerOfTwo(int value)

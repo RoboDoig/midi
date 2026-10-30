@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Bonsai Library containing Dear ImGui operators for displaying MIDI sequences as musical notation.</Description>
+    <TargetFramework>net472</TargetFramework>
+    <PackageTags>$(PackageTags) MIDI Notation ImGui</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bonsai.ImGui" Version="0.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bonsai.MidiSequencing\Bonsai.MidiSequencing.csproj" />
+  </ItemGroup>
+
+</Project>

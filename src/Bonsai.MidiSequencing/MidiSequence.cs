@@ -19,6 +19,22 @@ namespace Bonsai.MidiSequencing
         /// The length of the sequence, in beats. All events must be scheduled within this length.
         /// </param>
         public MidiSequence(IEnumerable<SequenceEvent> events, double length)
+            : this(events, length, timeSignature: null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MidiSequence"/> class with the
+        /// specified time signature.
+        /// </summary>
+        /// <param name="events">The events in the sequence.</param>
+        /// <param name="length">
+        /// The length of the sequence, in beats. All events must be scheduled within this length.
+        /// </param>
+        /// <param name="timeSignature">
+        /// The time signature of the sequence, or <see langword="null"/> if the sequence has no time signature.
+        /// </param>
+        public MidiSequence(IEnumerable<SequenceEvent> events, double length, TimeSignature? timeSignature)
         {
             if (events is null)
             {
@@ -42,6 +58,7 @@ namespace Bonsai.MidiSequencing
             }
 
             Length = length;
+            TimeSignature = timeSignature?.Clone();
         }
 
         /// <summary>
@@ -55,10 +72,29 @@ namespace Bonsai.MidiSequencing
         public double Length { get; }
 
         /// <summary>
+        /// Gets the time signature of the sequence, or <see langword="null"/> if the
+        /// sequence has no time signature.
+        /// </summary>
+        public TimeSignature? TimeSignature { get; }
+
+        /// <summary>
+        /// Creates a copy of this sequence with the specified time signature.
+        /// </summary>
+        /// <param name="timeSignature">
+        /// The time signature of the new sequence, or <see langword="null"/> to remove the time signature.
+        /// </param>
+        /// <returns>A new <see cref="MidiSequence"/> with the same events and length.</returns>
+        public MidiSequence WithTimeSignature(TimeSignature? timeSignature)
+        {
+            return new MidiSequence(Events, Length, timeSignature);
+        }
+
+        /// <summary>
         /// Creates a sequence from all non-meta events in a standard MIDI file, measured in
         /// quarter notes. The length of the sequence is the position of the last event rounded
         /// up to a whole beat. The tempo map of the file is ignored, since tempo is defined
-        /// by the transport. Each event is tagged with the zero-based index of its track chunk.
+        /// by the transport, but the first time signature in the file is kept. Each event is
+        /// tagged with the zero-based index of its track chunk.
         /// </summary>
         /// <param name="file">The MIDI file to convert.</param>
         /// <returns>A new <see cref="MidiSequence"/> containing the events in the file.</returns>
@@ -77,13 +113,24 @@ namespace Bonsai.MidiSequencing
                     .Select(timedEvent => new SequenceEvent(timedEvent.Time / ticksPerBeat, timedEvent.Event, trackIndex)))
                 .ToArray();
             var length = events.Length > 0 ? Math.Ceiling(events.Max(sequenceEvent => sequenceEvent.Beat)) : 0;
-            return new MidiSequence(events, length);
+            var timeSignatureEvent = file.GetTrackChunks()
+                .SelectMany(track => track.GetTimedEvents())
+                .Where(timedEvent => timedEvent.Event is TimeSignatureEvent)
+                .OrderBy(timedEvent => timedEvent.Time)
+                .Select(timedEvent => (TimeSignatureEvent)timedEvent.Event)
+                .FirstOrDefault();
+            var timeSignature = timeSignatureEvent != null
+                ? new TimeSignature(timeSignatureEvent.Numerator, timeSignatureEvent.Denominator)
+                : null;
+            return new MidiSequence(events, length, timeSignature);
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{{Events = {Events.Count}, Length = {Length}}}";
+            return TimeSignature != null
+                ? $"{{Events = {Events.Count}, Length = {Length}, TimeSignature = {TimeSignature}}}"
+                : $"{{Events = {Events.Count}, Length = {Length}}}";
         }
     }
 }

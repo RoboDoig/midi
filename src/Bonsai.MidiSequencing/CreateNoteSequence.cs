@@ -64,6 +64,13 @@ namespace Bonsai.MidiSequencing
         public int Channel { get; set; }
 
         /// <summary>
+        /// Gets or sets the time signature of the sequence. If no value is specified,
+        /// the sequence has no time signature.
+        /// </summary>
+        [Description("The time signature of the sequence. If no value is specified, the sequence has no time signature.")]
+        public TimeSignature? TimeSignature { get; set; }
+
+        /// <summary>
         /// Generates an observable sequence that contains a single MIDI sequence
         /// created from the step pattern.
         /// </summary>
@@ -101,6 +108,8 @@ namespace Bonsai.MidiSequencing
 
             var velocity = MidiValue.ToSevenBitNumber(Velocity, nameof(Velocity));
             var channel = MidiValue.ToFourBitNumber(Channel, nameof(Channel));
+            var timeSignature = TimeSignature;
+            timeSignature?.Validate();
             var steps = (Notes ?? string.Empty).Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
             var groups = new List<(SevenBitNumber[] Notes, int Start, int Length)>();
             for (int i = 0; i < steps.Length; i++)
@@ -135,7 +144,7 @@ namespace Bonsai.MidiSequencing
                 }
             }
 
-            return new MidiSequence(events, steps.Length * stepLength);
+            return new MidiSequence(events, steps.Length * stepLength, timeSignature);
         }
 
         static SevenBitNumber ParseNote(string token)
